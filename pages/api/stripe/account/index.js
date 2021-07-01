@@ -7,14 +7,12 @@ const stripeAccount = async (req, res) => {
     // CREATE CONNECTED ACCOUNT
     const { mobile } = req.query
     const account = await stripe.accounts.create({
-      type: "express",
+      type: "Standard",
     })
     const accountLinks = await stripe.accountLinks.create({
       account: account.id,
-      refresh_url: `${host}/api/stripe/account/reauth?account_id=${account.id}`,
-      return_url: `${host}/register${mobile ? "-mobile" : ""}?account_id=${
-        account.id
-      }&result=success`,
+      refresh_url: '${host}/api/stripe/account/reauth?account_id=${account.id}',
+      return_url: '${host}/register${mobile ? "-mobile" : ""}?account_id=${  account.id}&result=success',
       type: "account_onboarding",
     })
     if (mobile) {
